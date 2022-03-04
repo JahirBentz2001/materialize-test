@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Inscripción en línea</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/df-number-format/2.1.6/jquery.number.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$("#nivel").on("change", function(){
+				var nivel = $(this).val();		
+				crearListaCarreras(nivel);
+			});
+		});
+		
+		var oferta = {
+			'lic_e':['Administración y Dirección de Empresas', 'Derecho', 'Comunicación y Entornos Digitales', 'Ingeniería en Sistemas Computacionales', 'Psicología'],
+			'lic_m':['Administración', 'Derecho', 'Ingeniería Industrial', 'Informática'],
+			'mae_e':['Administración y Gestión de Instituciones Educativas', 'Derecho Fiscal', 'Derecho Privado', 'Redes y Telecomunicaciones', 'Impuestos'],
+			'doc_e':['Ciencias Administrativas', 'Derecho', 'Ingeniería en Tecnologías Emergentes', 'Educación']			
+		};
+		
+		function crearListaCarreras(nivel){
+			var carreras = $("#carrera").empty().append($("<option value=''>Seleccione una opción</option>"));
+			if(nivel !== ""){
+				var lista_carreras = [];
+				var costo = 0;
+				switch(nivel){
+					case 'lic_e': lista_carreras = oferta.lic_e; costo = 1500; break;
+					case 'lic_m': lista_carreras = oferta.lic_m; costo = 2500; break;
+					case 'mae_e': lista_carreras = oferta.mae_e; costo = 3000; break;
+					case 'doc_e': lista_carreras = oferta.doc_e; costo = 3500; break;
+				}
+				
+				if(lista_carreras.length > 0){
+					$.each(lista_carreras, function(k,v){
+						carreras.append(
+							$("<option>").text(v)
+						)
+					});
+					
+					$("#costo").val($.number(costo));
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<img src="https://servicios.ver.ucc.mx/icecc/img/logo_ucc_transparente.png" style="background:#002449"/>
+	<h1>Inscripción en línea</h1>
+	<h3>Ingreso</h3>
+	Nivel<br>
+	<select id="nivel">
+		<option value="">Seleccione una opción</option>
+		<option value="lic_e">Licenciatura escolarizada</option>
+		<option value="lic_m">Licenciatura mixta</option>
+		<option value="mae_e">Maestría</option>
+		<option value="doc_e">Doctorado</option>
+	</select><br>
+	
+	Carrera<br>
+	<select id="carrera">
+		<option value="">Seleccione una opción</option>		
+	</select>
+	
+	<h3>Datos personales</h3>
+	C.U.R.P<br />
+	<input type="text" /><br>
+	
+	Nombre<br />
+	<input type="text" /><br>
+	
+	Apellidos<br />
+	<input type="text" /><br>	
+	
+	E-mail<br />
+	<input type="text" /><br>	
+	
+	Celular<br />
+	<input type="text" /><br>		
+	
+	Teléfono<br />
+	<input type="text" /><br>
+	
+	Escuela de procedencia<br />
+	<input type="text" />	
+	
+	<h3>Información de pago</h3>
+	Total a pagar<br />
+	<input type="text" id="costo" readonly/><br>
+	
+	Método de pago<br />
+	<input type="checkbox" /> depósito referenciado<br>
+	<input type="checkbox" /> tarjeta de crédito o débito<br>
+	<input type="checkbox" /> en cajas de la UCC<br>
+	
+	<input type="button" value="Enviar"/>
+</body>
+</html>
